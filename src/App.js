@@ -12,24 +12,61 @@ const CountryAndCapitalGame = ({ data }) => {
         state: "DEFAULT",
       }))
   );
-
+  const [selected, setSelected] = useState();
+  const gameEnd = options.length === 0;
+  if (gameEnd) {
+    return <h1>Congrats</h1>;
+  }
   return (
     <div>
       {options.map((option) => (
         <button
-          className={option.state === "SELECTED" ? "selected" : ""}
+          key={option.value}
+          className={
+            option.state === "SELECTED"
+              ? "selected"
+              : option.state === "WRONG"
+              ? "wrong"
+              : ""
+          }
           onClick={() => {
-            setOptions(
-              options.map((opt) => {
-                // on the option we click on we get that option back in state with the state changed from DEFAULT to Selected
-                return opt === option
-                  ? {
-                      ...opt,
-                      state: "SELECTED",
-                    }
-                  : opt;
-              })
-            );
+            if (!selected) {
+              setSelected(option);
+              setOptions(
+                options.map((opt) => {
+                  // on the option we click on we get that option back in state with the state changed from DEFAULT to Selected
+                  return opt === option
+                    ? {
+                        ...opt,
+                        state: "SELECTED",
+                      }
+                    : { ...opt, state: "DEFAULT" };
+                })
+              );
+            } else {
+              if (
+                selected.value === data[option.value] ||
+                data[selected.value] === option.value
+              ) {
+                setOptions(
+                  options.filter((opt) => {
+                    return !(
+                      opt.value === selected.value || opt.value === option.value
+                    );
+                  })
+                );
+              } else {
+                setOptions(
+                  options.map((opt) => {
+                    return opt.value === selected.value ||
+                      opt.value === option.value
+                      ? { ...opt, state: "WRONG" }
+                      : opt;
+                  })
+                );
+              }
+              setSelected(undefined);
+            }
           }}
         >
           {option.value}

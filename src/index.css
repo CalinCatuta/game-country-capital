@@ -8,5 +8,8 @@ body {
 }
 
 .selected {
-  background-color: rgb(94, 94, 209);
+  background-color: #009bff;
+}
+.wrong {
+  background-color: rgb(246, 111, 111);
 }
