@@ -6,3 +6,7 @@ body {
   justify-content: center;
   height: 50vh;
 }
+
+.selected {
+  background-color: rgb(94, 94, 209);
+}
