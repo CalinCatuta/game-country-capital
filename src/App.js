@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+const CountryAndCapitalGame = ({ data }) => {
+  const countrys = Object.keys(data);
+  const capitals = Object.values(data);
+  const options = [...countrys, ...capitals];
+
+  return (
+    <div>
+      {options.map((option) => (
+        <button>{option}</button>
+      ))}
+    </div>
+  );
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <CountryAndCapitalGame
+        data={{ Germani: "Berlin", Romania: "Bucuresti" }}
+      />
     </div>
   );
 }
