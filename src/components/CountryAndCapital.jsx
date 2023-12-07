@@ -14,7 +14,7 @@ export const CountryAndCapitalGame = ({ data }) => {
         state: "DEFAULT",
       }))
   );
-  //   this state get value when we click on a button
+  //   This will get the object we click on to know what we clicked on.
   const [selected, setSelected] = useState();
   //   function
   //   check if it is the good pair of key and value
@@ -22,25 +22,31 @@ export const CountryAndCapitalGame = ({ data }) => {
     return opt.value === selected.value || opt.value === option.value;
   };
   const onClickHan = (option) => {
+    // Check if no option is currently selected
     if (!selected) {
+      // If no option is selected, set the clicked option as selected
       setSelected(option);
+      // Update the options array, marking the selected option as "SELECTED"
       setOptions(
-        options.map((opt) =>
-          // on the option we click on we get that option back in state with the state changed from DEFAULT to Selected
-          ({ ...opt, state: opt === option ? "SELECTED" : "DEFAULT" })
-        )
+        options.map((opt) => ({
+          ...opt,
+          state: opt === option ? "SELECTED" : "DEFAULT",
+        }))
       );
     } else {
-      if (
-        selected.value === data[option.value] ||
-        data[selected.value] === option.value
-      ) {
+      // If an option is already selected, check if the clicked option forms a correct pair
+      const capital = data[option.value];
+      const selectedCapital = data[selected.value];
+
+      if (selected.value === capital || selectedCapital === option.value) {
+        // If the pair is correct, remove both options from the options array
         setOptions(
           options.filter((opt) => {
             return !isPartOfPair(opt, selected, option);
           })
         );
       } else {
+        // If the pair is incorrect, mark both options as "WRONG" in the options array
         setOptions(
           options.map((opt) => {
             return isPartOfPair(opt, selected, option)
@@ -49,9 +55,11 @@ export const CountryAndCapitalGame = ({ data }) => {
           })
         );
       }
+      // Reset the selected state to undefined for the next selection
       setSelected(undefined);
     }
   };
+
   //   change className function
   const onClassChangeHan = (option) => {
     if (option.state === "SELECTED") {
@@ -69,7 +77,7 @@ export const CountryAndCapitalGame = ({ data }) => {
     return <h1>Congrats</h1>;
   }
   return (
-    <div>
+    <div className="grid">
       {options.map((option) => (
         <button
           key={option.value}
