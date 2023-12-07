@@ -24,6 +24,7 @@ function App() {
     if (col === color) {
       setGoodAnswer(true);
       generateColors();
+      setGoodAnswer();
     } else {
       setGoodAnswer(false);
     }
