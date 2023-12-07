@@ -1,36 +1,10 @@
 body {
-  background-color: rgb(7, 18, 27);
-  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 50vh;
 }
-button {
-  border: 1px solid rgb(177, 173, 173);
-  background: none;
-  border-radius: 5px;
-  color: #ddd;
-  cursor: pointer;
-}
-button:hover {
-  border: 1px solid #fff;
-}
-.selected {
-  background-color: #0d324b;
-  color: white;
-}
-.wrong {
-  background-color: rgb(251, 67, 67);
-  color: #fff;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
-}
-@media (max-width: 380px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.box {
+  width: 200px;
+  height: 200px;
 }
