@@ -1,11 +1,21 @@
 import { useState } from "react";
 
-export const CountryAndCapitalGame = ({ data }) => {
+type ButtonState = "DEFAULT" | "SELECTED" | "WRONG";
+type Option = {
+  value: string;
+  state: ButtonState;
+};
+
+export const CountryAndCapitalGame = ({
+  data,
+}: {
+  data: Record<string, string>;
+}) => {
   // get only the country from object data
   const countrys = Object.keys(data);
   // get only the capitals from object data
   const capitals = Object.values(data);
-  const [options, setOptions] = useState(
+  const [options, setOptions] = useState<Option[]>(
     [...countrys, ...capitals]
       .sort(() => Math.random() - 0.5) // Rendomizing the array
       // this state will have an array with for each keys and value {state: "DEFAULT", value: "Germani"}
@@ -15,13 +25,13 @@ export const CountryAndCapitalGame = ({ data }) => {
       }))
   );
   //   This will get the object we click on to know what we clicked on.
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState<Option>();
   //   function
   //   check if it is the good pair of key and value
-  const isPartOfPair = (opt, selected, option) => {
+  const isPartOfPair = (opt: Option, selected: Option, option: Option) => {
     return opt.value === selected.value || opt.value === option.value;
   };
-  const onClickHan = (option) => {
+  const onClickHan = (option: Option) => {
     // Check if no option is currently selected
     if (!selected) {
       // If no option is selected, set the clicked option as selected
@@ -61,7 +71,7 @@ export const CountryAndCapitalGame = ({ data }) => {
   };
 
   //   change className function
-  const onClassChangeHan = (option) => {
+  const onClassChangeHan = (option: Option) => {
     if (option.state === "SELECTED") {
       return "selected";
     } else if (option.state === "WRONG") {
