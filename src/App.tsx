@@ -1,12 +1,17 @@
 import { getRandomHexColor } from "./util/RandomColor";
 import { useState, useEffect } from "react";
 
+enum Result {
+  Correct,
+  Wrong,
+}
+
 function App() {
   const [color, setColor] = useState("");
-  const [answer, setAnswer] = useState([]);
-  const [goodAnswer, setGoodAnswer] = useState();
+  const [answer, setAnswer] = useState<string[]>([]);
+  const [goodAnswer, setGoodAnswer] = useState<Result | undefined>(undefined);
 
-  const generateColors = (e) => {
+  const generateColors = () => {
     const chosedColor = getRandomHexColor();
     setColor(chosedColor);
     setAnswer(
@@ -20,13 +25,13 @@ function App() {
     generateColors();
   }, []);
 
-  const guessHan = (col) => {
+  const guessHan = (col: string) => {
     if (col === color) {
-      setGoodAnswer(true);
+      setGoodAnswer(Result.Correct);
       generateColors();
-      setGoodAnswer();
+      setGoodAnswer(undefined);
     } else {
-      setGoodAnswer(false);
+      setGoodAnswer(Result.Wrong);
     }
   };
   return (
@@ -39,8 +44,8 @@ function App() {
           </button>
         ))}
       </div>
-      {goodAnswer === true && <h1>Good Answer</h1>}
-      {goodAnswer === false && <h1>Wrong Answer</h1>}
+      {goodAnswer === Result.Correct && <h1>Good Answer</h1>}
+      {goodAnswer === Result.Wrong && <h1>Wrong Answer</h1>}
     </div>
   );
 }
